@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.dao.BlogMapper">
+    <select id="queryBlogIf" parameterType="map" resultType="Blog">
+        select * from blog
+        <where>
+            <!--where元素只会在至少有一个子元素的条件返回SQL子句的情况下才去插入“WHERE"子句。
+            而且，若语句的开头为AND'"或"OR"，where元素也会将它们去除-->
+            <if test="title!=null">
+                title = #{title}
+            </if>
+            <if test="author!=null">
+                and author = #{author}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.xue.dao.UserMapper"><!--命名空间-->
+    <!--cache缓存-->
+    <!--这里的resultType是Sql语句的返回值-->
+    <!--标签id绑定方法名称,命名空间下的方法名-->
+    <!--parameterType指的是传入参数类型-->
+    <select id="getUserList" resultType="user">
+    select * from day14.user ;
+    </select>
+    <!--
+    select * from user where id=?
+     select * from user where id=? or 1=1
+    -->
+    <!--结果集映射-->
+    <resultMap id="UserMap" type="User">
+       <!-- column数据库中的字段，property实体类中的属性-->
+     <!--   <result column="id" property="id"/>
+        <result column="username" property="username"/>-->
+        <!--什么需要映射就映射什么-->
+        <result column="password" property="pwd"/>
+    </resultMap>
+    <select id="getUserLike" resultMap="UserMap"><!--resultType="com.xue.pojo.User-->
+        select *from user where username like "%"#{value}"%";
+    </select>
+
+    <select id="getUserById" parameterType="int" resultType="com.xue.pojo.User">
+        select * from day14.user where id=#{id}
+    </select>
+    <!--parameterType参数类型，参数类型的小写。-->
+    <select id="getUserByLimit" parameterType="map" resultMap="UserMap">
+        select * from user limit #{startIndex},#{pageSize};
+    </select>
+    <select id="getUserByRowBounds"  resultMap="UserMap">
+        select * from user ;
+    </select>
+</mapper>

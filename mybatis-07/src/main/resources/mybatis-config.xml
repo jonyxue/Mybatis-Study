@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--核心配置文件-->
+<configuration>
+    <!--引入外部配置文件 优先使用外部配置文件-->
+    <properties resource="db.properties">
+       <!-- <property name="username" value="root"/>
+        <property name="password" value="root"/>-->
+    </properties>
+    <settings>
+        <!--标准的日志工厂-->
+<!--        <setting name="logImpl" value="log4j"/>-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--可以给类起别名-->
+    <typeAliases>
+       <!-- <typeAlias type="com.xue.pojo.Student" alias="Student"/>
+        <typeAlias type="com.xue.pojo.Teacher" alias="Teacher"/>-->
+        <package name="com.xue.pojo"/><!--包下所有javabean类的消息名做别名。-->
+    </typeAliases>
+
+
+    <environments default="development"><!--环境变量-->
+        <environment id="development">
+            <transactionManager type="JDBC"/><!--transactionManager事务管理-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+                <!--useUnicode是否使用Unicode字符集，如果参数characterEncoding设置为gb2312或gbk，本参数值必须设置为true-->
+                <!--characterEncoding当useUnicode设置为true时，指定字符编码。比如可设置为gb2312或gbk-->
+                <!--useSSL不建议在没有服务器身份验证的情况下建立SSL连接。根据MySQL 5.5.45+、5.6.26+和5.7.6+的要求，
+                如果不设置显式选项，则必须建立默认的SSL连接。需要通过设置useSSL=false来显式禁用SSL
+                ，或者设置useSSL=true并为服务器证书验证提供信任存储。-->
+<!--typeAliases(类型别名)-->
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--绑定接口-->
+    <mappers>
+        <mapper class="com.xue.dao.TeacherMapper"/>
+        <mapper class="com.xue.dao.StudentMapper"/><!--
+        --><mapper resource="com/xue/dao/StudentMapper.xml"/>
+    </mappers>
+
+
+</configuration>
